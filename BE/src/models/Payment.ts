@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IPayment extends Document {
   name: string;
@@ -7,11 +7,14 @@ export interface IPayment extends Document {
   grid: string[][];
 }
 
-const PaymentSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  amount: { type: Number, required: true },
-  code: { type: String, required: true },
-  grid: { type: [[String]], required: true },
-});
+const PaymentSchema: Schema = new Schema(
+  {
+    name: { type: String, required: true },
+    amount: { type: Number, required: true },
+    code: { type: String, required: true },
+    grid: { type: [[String]], required: true },
+  },
+  { timestamps: true },
+);
 
-export default mongoose.model<IPayment>('Payment', PaymentSchema);
+export default mongoose.model<IPayment>("Payment", PaymentSchema);
