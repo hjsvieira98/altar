@@ -1,0 +1,8 @@
+{
+    "cSpell.words": [
+        "mantine",
+        "zustand"
+    ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+}

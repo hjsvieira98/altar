@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { generatePayments } from '../contants';
+import React, { useState } from "react";
+import axios from "axios";
+import { crudPayments } from "../constants";
+import { Button, Input } from "@mantine/core";
+import { useForm } from "@mantine/form";
 
 interface Payment {
   name: string;
@@ -9,48 +11,54 @@ interface Payment {
 
 const PaymentForm: React.FC = () => {
   const [payment, setPayment] = useState<Payment>({
-    name: '',
+    name: "",
     amount: 0,
   });
+  const form = useForm({ initialValues: payment });
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = event.target;
-    setPayment((prevPayment) => ({
-      ...prevPayment,
-      [name]: value,
-    }));
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
+    setPayment({ ...payment, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    axios.post(generatePayments, payment).catch((error) => {
-      console.error('Error adding payment:', error);
+  const handleSubmit = () => {
+    axios.post(crudPayments, payment).catch((error) => {
+      console.error("Error adding payment:", error);
     });
 
-    setPayment({ name: '', amount: 0 });
+    form.reset();
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
+    <div
+      style={{
+        marginTop: "16px",
+        display: "flex",
+        justifyContent: "start",
+        maxWidth: "100%",
+      }}
+    >
+      <form
+        onSubmit={form.onSubmit(handleSubmit)}
+        style={{ display: "flex", gap: "8px" }}
+      >
+        <Input
           type="text"
           placeholder="Payment Name"
           name="name"
           value={payment.name}
           onChange={handleInputChange}
+          required
         />
-        <input
+        <Input
           type="number"
           placeholder="Payment Amount"
           name="amount"
           value={payment.amount}
           onChange={handleInputChange}
+          required
         />
-        <button type="submit">Add Payment</button>
+        <Button type="submit">Add Payment</Button>
       </form>
     </div>
   );

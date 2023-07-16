@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { Title, Table } from "@mantine/core";
 
 export interface Payment {
   name: string;
@@ -13,27 +14,36 @@ interface PaymentsListProps {
 
 const PaymentsList: React.FC<PaymentsListProps> = ({ payments }) => {
   return (
-    <div>
-      <h2>Payments List</h2>
-      {payments.map((payment, index) => (
-        <div key={index}>
-          <h3>Payment #{index + 1}</h3>
-          <p>Name: {payment.name}</p>
-          <p>Amount: {payment.amount}</p>
-          <p>Code: {payment.code}</p>
-          <div>
-            <h4>Grid:</h4>
-            {payment.grid.map((row, rowIndex) => (
-              <div key={rowIndex}>
-                {row.map((cell, colIndex) => (
-                  <span key={colIndex}>{cell}</span>
-                ))}
-              </div>
-            ))}
-          </div>
-          <hr />
-        </div>
-      ))}
+    <div style={{ marginTop: "16px" }}>
+      <Title order={2}>Payments List</Title>
+      <Table striped style={{ marginTop: "16px" }}>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Code</th>
+            <th>Grid</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payments.map((payment, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{payment.name}</td>
+              <td>{payment.amount}</td>
+              <td>{payment.code}</td>
+              <td>
+                <ul>
+                  {payment.grid.map((row, rowIndex) => (
+                    <li key={rowIndex}>{row.join(" ")}</li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

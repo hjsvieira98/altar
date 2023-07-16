@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import PaymentsList from '../components/PaymentsList';
-import PaymentForm from '../components/PaymentForm';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import PaymentsList from "../components/PaymentsList";
+import PaymentForm from "../components/PaymentForm";
+import { crudPayments } from "../constants";
+import { Title } from "@mantine/core";
 
 interface Payment {
   name: string;
   amount: number;
-  code:string;
-  grid:string[][]
+  code: string;
+  grid: string[][];
 }
 
 const PaymentsPage: React.FC = () => {
@@ -16,10 +18,10 @@ const PaymentsPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/payments');
+        const response = await axios.get(crudPayments);
         setPayments(response.data.payments);
       } catch (error) {
-        console.error('Error fetching payments data:', error);
+        console.error("Error fetching payments data:", error);
       }
     };
 
@@ -28,7 +30,7 @@ const PaymentsPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Payments Page</h1>
+      <Title order={2}>Payments Page</Title>
       <PaymentForm />
       <PaymentsList payments={payments} />
     </div>

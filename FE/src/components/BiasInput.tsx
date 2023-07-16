@@ -1,33 +1,58 @@
-import React from 'react';
-import axios from 'axios';
-import { generateGrid } from '../contants';
-import { useBaseStore } from '../store/baseStore';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { generateGrid } from "../constants";
+import { useBaseStore } from "../store/baseStore";
+import { Input } from "@mantine/core";
 
 const BiasInput: React.FC = () => {
-  const biasChareter = useBaseStore((state)=>(state.biasChareter))
-  const setBiasChareter = useBaseStore((state)=>(state.setBiasChareter))
+  const biasCharacter = useBaseStore((state) => state.biasCharacter);
+  const setBiasCharacter = useBaseStore((state) => state.setBiasCharacter);
+  const [disabled, setDisabled] = useState<boolean>(false);
+  useEffect(() => {
+    if (biasCharacter) {
+      setDisabled(true);
+
+      const timeout = setTimeout(() => {
+        setDisabled(false);
+      }, 4000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [biasCharacter]);
 
   const handleBiasChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    
-    setBiasChareter(value);
 
-    if (value && value.length === 1) {
-      axios.post(generateGrid, { bias: value }).catch((error) => {
-        console.error('Error setting bias:', error);
-      });
+    if (value.length === 0) {
+      setBiasCharacter(value);
+      return;
+    }
+    const letters = /^[A-Za-z]+$/;
+    if (value.match(letters) || value === "") {
+      if (value && value.length === 1) {
+        setBiasCharacter(value);
+        axios.post(generateGrid, { bias: value }).catch((error) => {
+          console.error("Error setting bias:", error);
+        });
+      } else {
+        alert("Max characters permitted is 1");
+      }
+    } else {
+      alert("Please enter a valid character");
     }
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Enter bias character (a-z)"
-        value={biasChareter}
-        onChange={handleBiasChange}
-      />
-    </div>
+    <Input
+      type="text"
+      placeholder="Enter bias character (a-z)"
+      name="biasInput"
+      value={biasCharacter}
+      onChange={handleBiasChange}
+      disabled={disabled}
+    />
   );
 };
 
