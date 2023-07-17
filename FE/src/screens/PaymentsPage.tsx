@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import PaymentsList from "../components/PaymentsList";
 import PaymentForm from "../components/PaymentForm";
 import { crudPayments } from "../constants";
 import { Title } from "@mantine/core";
+import { useBaseStore } from "../store/baseStore";
 
 interface Payment {
   name: string;
@@ -13,7 +14,8 @@ interface Payment {
 }
 
 const PaymentsPage: React.FC = () => {
-  const [payments, setPayments] = useState<Payment[]>([]);
+  const payments = useBaseStore((state) => state.payments);
+  const setPayments = useBaseStore((state) => state.setPayments);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +34,7 @@ const PaymentsPage: React.FC = () => {
     <div>
       <Title order={2}>Payments Page</Title>
       <PaymentForm />
-      <PaymentsList payments={payments} />
+      <PaymentsList payments={payments as Payment[]} />
     </div>
   );
 };

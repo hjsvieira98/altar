@@ -19,7 +19,7 @@ const ButtonStartGenerate: React.FC = () => {
     try {
       const response = await axios.post(generateGrid, {
         biasChar: biasCharRef.current,
-        biasPercentage: 0.2,
+        biasPercentage: biasCharRef.current && 0.2,
       });
       setGrid(response.data.grid);
       setCode(response.data.code);

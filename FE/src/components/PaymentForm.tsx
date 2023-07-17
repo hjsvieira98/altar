@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { crudPayments } from "../constants";
-import { Button, Input } from "@mantine/core";
+import { Button, Input, NumberInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useBaseStore } from "../store/baseStore";
 
 interface Payment {
   name: string;
@@ -14,17 +15,32 @@ const PaymentForm: React.FC = () => {
     name: "",
     amount: 0,
   });
-  const form = useForm({ initialValues: payment });
+  const setPayments = useBaseStore((state) => state.setPayments);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
-    setPayment({ ...payment, [name]: value });
-  };
+  const form = useForm({
+    initialValues: payment,
+    validate: {
+      name: (value) =>
+        value.length < 2 ? "Name must have at least 2 letters" : null,
+      amount: (value) => (value > 0 ? null : "Min number accepted is 1"),
+    },
+    validateInputOnBlur: true,
+  });
 
-  const handleSubmit = () => {
-    axios.post(crudPayments, payment).catch((error) => {
-      console.error("Error adding payment:", error);
-    });
+  const handleSubmit = (payment: Payment) => {
+    axios
+      .post(crudPayments, payment)
+      .then(async () => {
+        try {
+          const response = await axios.get(crudPayments);
+          setPayments(response.data.payments);
+        } catch (error) {
+          console.error("Error fetching payments data:", error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding payment:", error);
+      });
 
     form.reset();
   };
@@ -39,26 +55,27 @@ const PaymentForm: React.FC = () => {
       }}
     >
       <form
-        onSubmit={form.onSubmit(handleSubmit)}
+        onSubmit={form.onSubmit((values) => handleSubmit(values))}
         style={{ display: "flex", gap: "8px" }}
       >
-        <Input
+        <TextInput
           type="text"
           placeholder="Payment Name"
-          name="name"
-          value={payment.name}
-          onChange={handleInputChange}
           required
+          {...form.getInputProps("name")}
         />
-        <Input
+        <NumberInput
           type="number"
           placeholder="Payment Amount"
-          name="amount"
-          value={payment.amount}
-          onChange={handleInputChange}
+          {...form.getInputProps("amount")}
           required
+          min={1}
+          max={100000}
+          style={{ width: "190px" }}
         />
-        <Button type="submit">Add Payment</Button>
+        <Button disabled={!form.isValid()} type="submit">
+          Add Payment
+        </Button>
       </form>
     </div>
   );

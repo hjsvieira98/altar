@@ -27,7 +27,7 @@ const PaymentsList: React.FC<PaymentsListProps> = ({ payments }) => {
           </tr>
         </thead>
         <tbody>
-          {payments.map((payment, index) => (
+          {payments?.map((payment, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{payment.name}</td>
@@ -35,7 +35,7 @@ const PaymentsList: React.FC<PaymentsListProps> = ({ payments }) => {
               <td>{payment.code}</td>
               <td>
                 <ul>
-                  {payment.grid.map((row, rowIndex) => (
+                  {payment?.grid?.map((row, rowIndex) => (
                     <li key={rowIndex}>{row.join(" ")}</li>
                   ))}
                 </ul>
