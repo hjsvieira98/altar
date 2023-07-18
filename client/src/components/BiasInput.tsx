@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { generateGrid } from "../constants";
-import { useBaseStore } from "../store/baseStore";
+import { useBaseStore } from "../store/baaseStore";
 import { Input } from "@mantine/core";
 
 const BiasInput: React.FC = () => {

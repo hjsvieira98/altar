@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import { crudPayments } from "../constants";
 import { Button, NumberInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useBaseStore } from "../store/baseStore";
+import { useBaseStore } from "../store/baaseStore";
 
 interface Payment {
   name: string;

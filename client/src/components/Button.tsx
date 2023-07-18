@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { generateGrid } from "../constants";
-import { useBaseStore } from "../store/baseStore";
+import { useBaseStore } from "../store/baaseStore";
 import { Button } from "@mantine/core";
 
 const ButtonStartGenerate: React.FC = () => {
@@ -48,6 +48,7 @@ const ButtonStartGenerate: React.FC = () => {
       setIntervalRunning(false);
       clearInterval(intervalId.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
