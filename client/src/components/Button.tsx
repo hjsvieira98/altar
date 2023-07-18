@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { generateGrid } from "../constants";
-import { useBaseStore } from "../store/baaseStore";
+import { useBaseStore } from "../store/BaseStore";
 import { Button } from "@mantine/core";
 
 const ButtonStartGenerate: React.FC = () => {
@@ -18,8 +18,8 @@ const ButtonStartGenerate: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await axios.post(generateGrid, {
-        biasChar: biasCharRef.current,
-        biasPercentage: biasCharRef.current && 0.2,
+        biasChar: biasCharRef.current !== "" ? biasCharRef.current : undefined,
+        biasPercentage: biasCharRef.current ? 0.2 : undefined,
       });
       setGrid(response.data.grid);
       setCode(response.data.code);

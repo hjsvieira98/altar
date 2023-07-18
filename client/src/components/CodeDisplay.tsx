@@ -1,5 +1,5 @@
 import React from "react";
-import { useBaseStore } from "../store/baaseStore";
+import { useBaseStore } from "../store/BaseStore";
 import { Paper, Badge, Text, Group } from "@mantine/core";
 
 const CodeDisplay: React.FC = () => {

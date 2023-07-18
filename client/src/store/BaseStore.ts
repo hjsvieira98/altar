@@ -9,7 +9,7 @@ interface Base {
   setGrid: (newGrid: string[][]) => void;
   setCode: (newCode: string) => void;
   setPayments: (payments: Payment[]) => void;
-  setBiasCharacter: (newBiasCharacter: string) => void;
+  setBiasCharacter: (newBiasCharacter: string | undefined) => void;
   setIntervalRunning: (intervalRunning: boolean) => void;
 }
 
@@ -22,7 +22,7 @@ export const useBaseStore = create<Base>((set) => ({
   setGrid: (newGrid: string[][]) => set({ grid: newGrid }),
   setCode: (newCode: string) => set({ code: newCode }),
   setPayments: (payments: Payment[]) => set({ payments: payments }),
-  setBiasCharacter: (newBiasCharacter: string) =>
+  setBiasCharacter: (newBiasCharacter: string | undefined) =>
     set({ biasCharacter: newBiasCharacter }),
   setIntervalRunning: (intervalRunning: boolean) =>
     set({ intervalRunning: intervalRunning }),

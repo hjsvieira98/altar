@@ -4,7 +4,7 @@ import PaymentsList from "../components/PaymentsList";
 import PaymentForm from "../components/PaymentForm";
 import { crudPayments } from "../constants";
 import { Title } from "@mantine/core";
-import { useBaseStore } from "../store/baaseStore";
+import { useBaseStore } from "../store/BaseStore";
 
 interface Payment {
   name: string;

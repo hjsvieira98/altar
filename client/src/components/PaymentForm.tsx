@@ -3,7 +3,7 @@ import axios from "axios";
 import { crudPayments } from "../constants";
 import { Button, NumberInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useBaseStore } from "../store/baaseStore";
+import { useBaseStore } from "../store/BaseStore";
 
 interface Payment {
   name: string;

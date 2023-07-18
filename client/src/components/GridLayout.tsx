@@ -1,5 +1,5 @@
 import React from "react";
-import { useBaseStore } from "../store/baaseStore";
+import { useBaseStore } from "../store/BaseStore";
 import "./GridStyleLayout.css";
 
 const Grid: React.FC = () => {
