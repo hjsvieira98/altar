@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { crudPayments } from "../constants";
-import { Button, Input, NumberInput, TextInput } from "@mantine/core";
+import { Button, NumberInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useBaseStore } from "../store/baseStore";
 
@@ -11,14 +11,13 @@ interface Payment {
 }
 
 const PaymentForm: React.FC = () => {
-  const [payment, setPayment] = useState<Payment>({
-    name: "",
-    amount: 0,
-  });
   const setPayments = useBaseStore((state) => state.setPayments);
 
   const form = useForm({
-    initialValues: payment,
+    initialValues: {
+      name: "",
+      amount: 0,
+    },
     validate: {
       name: (value) =>
         value.length < 2 ? "Name must have at least 2 letters" : null,
