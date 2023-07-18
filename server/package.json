@@ -1,7 +1,7 @@
 {
-  "name": "be",
+  "name": "server",
   "version": "1.0.0",
-  "description": "Altar.io Challenge BE",
+  "description": "Altar.io Challenge server",
   "main": "server.ts",
   "scripts": {
     "server-start": "ts-node src/server.ts",

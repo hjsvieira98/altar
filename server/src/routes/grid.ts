@@ -19,14 +19,16 @@ router.post(
     check(
       "biasPercentage",
       "BiasPercentage must be a number between 0 and 1 (inclusive)"
-    ).custom((biasPercentage) => {
-      return !biasPercentage ||
-        typeof biasPercentage !== "number" ||
-        biasPercentage < 0 ||
-        biasPercentage > 1
-        ? false
-        : true;
-    }),
+    )
+      .optional()
+      .custom((biasPercentage) => {
+        return !biasPercentage ||
+          typeof biasPercentage !== "number" ||
+          biasPercentage < 0 ||
+          biasPercentage > 1
+          ? false
+          : true;
+      }),
   ],
   generateGridHandler
 );
